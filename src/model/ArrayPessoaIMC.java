@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ArrayPessoaIMC {
-    private List<PessoaIMC> pessoas;
+    private final List<PessoaIMC> pessoas;
     private int tamanho;
     public ArrayPessoaIMC(){
         this.pessoas = new ArrayList<PessoaIMC>();
@@ -21,11 +21,11 @@ public class ArrayPessoaIMC {
 
     @Override
     public String toString(){
-        String persons;
-        persons = "Pessoas: \n";
+        StringBuilder persons;
+        persons = new StringBuilder("Pessoas: \n");
         for(PessoaIMC pessoa : this.pessoas){
-            persons += pessoa.toString()+ "\n" + pessoa.resultIMC() + '\n';
+            persons.append(pessoa.toString()).append("\n").append(pessoa.resultIMC()).append('\n');
         }
-        return persons;
+        return persons.toString();
     }
 }

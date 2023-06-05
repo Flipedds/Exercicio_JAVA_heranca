@@ -1,63 +1,65 @@
 import model.ArrayPessoaIMC;
 import model.Homem;
 import model.Mulher;
-
 import java.util.Objects;
 import java.util.Scanner;
 
-public class Main {
+import static model.Inputs.*;
 
+public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         ArrayPessoaIMC lista_pessoas = new ArrayPessoaIMC();
 
-        System.out.print("Quantos objetos você deseja criar? ");
-        int quantidade = scanner.nextInt();
+        int quantidade = lerValor(scanner, "Quantos objetos você deseja criar? ");
 
-            for (int i = 0; i < quantidade;) {
-                System.out.print("Qual o tipo de objeto: homem ou mulher: ");
-                String tipo = scanner.next();
+        int i = 0;
 
-                System.out.println("Digite o nome: ");
-                String nome = scanner.next();
+        loop:
+        while (i < quantidade) {
+            String tipo = lerTipo(scanner,"Qual o tipo de objeto? homem ou mulher: " );
 
-                System.out.println("Digite a data de nascimento: exemplo: 04/03/2004 ");
-                String datanasc = scanner.next();
+            String nome = lerNome(scanner,"Digite o nome: " );
 
-                System.out.println("Digite o peso: exemplo: 70,0 ");
-                double peso = scanner.nextDouble();
+            String datanasc = lerData(scanner, "Digite a data de nascimento: exemplo: 04/03/2004: " );
 
-                System.out.println("Digite a altura: exemplo: 1,72");
-                double altura = scanner.nextDouble();
+            double peso = lerPeso(scanner, "Digite o peso: exemplo: 70,0: " );
 
-                if (Objects.equals(tipo, "homem")) {
+            double altura = lerAltura(scanner, "Digite a altura: exemplo: 1,72: " );
+
+            switch (tipo) {
+                case "homem" -> {
                     Homem novo_homem = new Homem(nome, datanasc, peso, altura);
                     System.out.println(lista_pessoas.set_pessoa(novo_homem));
                     i++;
-                } else if (Objects.equals(tipo, "mulher")) {
+                }
+                case "mulher" -> {
                     Mulher nova_mulher = new Mulher(nome, datanasc, peso, altura);
                     System.out.println(lista_pessoas.set_pessoa(nova_mulher));
                     i++;
                 }
-                else {
-                    System.out.println("Objeto escolhido não é homem nem mulher");
-                    System.out.println("\n");
-
-                    System.out.println("Deseja tentar novamente?: sim ou não");
-                    String escolha = scanner.next();
-                    if(Objects.equals(escolha, "sim")){
-                        System.out.println("Então vamos lá!");
-                        System.out.println("\n");
-                    } else if (Objects.equals(escolha, "não")) {
-                        break;
+                default -> {
+                    String escolha = lerEscolha(scanner, "Objeto escolhido não é homem nem mulher" + "\n" + "Deseja tentar novamente? sim ou não: ");
+                    switch (escolha) {
+                        case "sim":
+                            System.out.println("Então vamos lá!");
+                            System.out.println("\n");
+                            break;
+                        case "não":
+                            break loop;
+                        default:
+                            System.out.println("Opção inválida");
                     }
                 }
             }
+        }
 
-        if(Objects.equals(lista_pessoas.get_size(), true) ){
+        if(Objects.equals(lista_pessoas.get_size(),true)){
             System.out.println("\n");
-            System.out.println(lista_pessoas.toString());
+            System.out.println(lista_pessoas);
         }
+        else {
+            System.out.println("Não existem registros para serem mostrados !");
         }
-
     }
+}

@@ -1,8 +1,8 @@
 package model;
 
 public abstract class PessoaIMC extends Pessoa{
-    private double peso;
-    private double altura;
+    private final double peso;
+    private final double altura;
     public PessoaIMC(String nome, String Datanasc, double peso, double altura) {
         super(nome, Datanasc);
         this.altura = altura;
@@ -19,8 +19,7 @@ public abstract class PessoaIMC extends Pessoa{
     }
 
     public double calculaIMC(){
-        double IMC = this.peso / (this.altura * this.altura);
-        return IMC;
+        return this.peso / (this.altura * this.altura);
     }
 
     public abstract String resultIMC();
